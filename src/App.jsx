@@ -39,8 +39,17 @@ export default function App() {
     const timer = setInterval(() => {
       dispatch({ type: "TICK" });
     }, 250);
+    const handleKeyDown = (event) => {
+      if (event.key === "ArrowLeft") {
+        dispatch({ type: "MOVE_LEFT" });
+      } else if (event.key === "ArrowRight") {
+        dispatch({ type: "MOVE_RIGHT" });
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
       clearInterval(timer);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
