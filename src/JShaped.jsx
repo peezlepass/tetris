@@ -1,4 +1,4 @@
-export default function LShapedReversed() {
+export default function JShaped() {
   return (
     <div className="grid grid-cols-3 w-48">
       <div

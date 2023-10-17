@@ -12,7 +12,7 @@ export default function Brick({ color }) {
 
   return (
     <div
-      className={`w-16 h-16 ${colorMap[color]} border-8`}
+      className={`w-10 h-10 ${colorMap[color]} border-4`}
       style={{ borderStyle: "outset" }}
     ></div>
   );

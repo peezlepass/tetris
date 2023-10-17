@@ -2,11 +2,17 @@ import Field from "./Field";
 import { useReducer } from "react";
 import { reducer } from "./lib/reducer";
 import TetrisContext from "./lib/context";
-import { generateTetrisField } from "./tetris";
-
+import { generateQueue, generateTetrisField } from "./tetris";
+const board = generateTetrisField(10, 20);
+board[26] = "cyan";
+board[38] = "cyan";
+board[50] = "cyan";
+board[62] = "cyan";
 const initialState = {
-  board: generateTetrisField(10, 20),
+  board,
+  queue: generateQueue(100000),
 };
+console.log(initialState);
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);

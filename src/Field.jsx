@@ -7,8 +7,10 @@ export default function Field({ bricks }) {
       {bricks.map((brick) => {
         if (brick === "E") {
           return <Brick color="gray"></Brick>;
-        } else {
+        } else if (brick === "B") {
           return <Blank />;
+        } else {
+          return <Brick color={brick}></Brick>;
         }
       })}
     </div>

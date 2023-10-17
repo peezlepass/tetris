@@ -23,3 +23,22 @@ export function generateTetrisField(width, height) {
   }
   return arr;
 }
+
+export function generateQueue(count) {
+  let queue = [];
+  const figures = [
+    "left-zig-zag",
+    "l-shaped",
+    "j-shaped",
+    "right-zig-zag",
+    "square",
+    "straight",
+    "t-shaped",
+  ];
+
+  for (let i = 0; i < count; i++) {
+    let randomIndex = Math.floor(Math.random() * figures.length);
+    queue.push(figures[randomIndex]);
+  }
+  return queue;
+}

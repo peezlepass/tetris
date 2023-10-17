@@ -1,3 +1,3 @@
 export default function Blank() {
-  return <div className="w-16 h-16"></div>;
+  return <div className="w-10 h-10"></div>;
 }
