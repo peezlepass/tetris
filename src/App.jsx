@@ -7,20 +7,30 @@ import {
   generateTetrisField,
   generateEmptyField,
   combineFields,
+  placeFigure,
 } from "./tetris";
 
 const board = generateTetrisField(10, 20);
 const queue = generateQueue(100000);
-//const currentShape = queue.shift();
-const currentShape = "straight";
-const location = [28, 29, 30, 31];
+const currentFigure = "left-zig-zag";
+const location = placeFigure(currentFigure, 10);
 const initialState = {
   board,
   queue,
-  currentShape,
+  currentFigure,
   location,
 };
 console.log(initialState);
+
+const colorMap = {
+  "left-zig-zag": "red",
+  "l-shaped": "blue",
+  "j-shaped": "orange",
+  "right-zig-zag": "green",
+  "square": "yellow",
+  "straight": "cyan",
+  "t-shaped": "purple",
+};
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -35,7 +45,7 @@ export default function App() {
 
   const userBoard = generateEmptyField(10, 20);
   for (let i = 0; i < state.location.length; i++) {
-    userBoard[state.location[i]] = "cyan";
+    userBoard[state.location[i]] = colorMap[state.currentFigure];
   }
   return (
     <TetrisContext.Provider value={{ state, dispatch }}>

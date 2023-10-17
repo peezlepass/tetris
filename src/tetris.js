@@ -56,3 +56,18 @@ export function combineFields(a, b) {
     return b[i] || cell;
   });
 }
+
+export function placeFigure(figure, width) {
+  const m = Math.floor(width / 2);
+  const w = width + 2;
+  const figureMap = {
+    "left-zig-zag": [m + w + 1, m + 2 * w + 1, m + 2 * w, m + 3 * w],
+    "l-shaped": [m + w, m + 2 * w, m + 3 * w, m + 3 * w + 1],
+    "j-shaped": [m + w, m + 2 * w, m + 3 * w, m + 3 * w - 1],
+    "right-zig-zag": [m + w, m + 2 * w, m + 2 * w + 1, m + 3 * w + 1],
+    "square": [m + w, m + 1 + w, m + 2 * w, m + 1 + 2 * w],
+    "straight": [m - 1 + w, m + w, m + 1 + w, m + 2 + w],
+    "t-shaped": [m + w, m - 1 + 2 * w, m + 2 * w, m + 1 + 2 * w],
+  };
+  return figureMap[figure];
+}
