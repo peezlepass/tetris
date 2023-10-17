@@ -1,23 +1,20 @@
-import Straight from "./Straight";
-import Block from "./Block";
-import LShaped from "./LShaped";
-import LShapedReversed from "./LShapedReversed";
-import LeftZigZag from "./LeftZigZag";
-import RightZigZag from "./RightZigZag";
-import TShaped from "./TShaped";
+import Field from "./Field";
+import { useReducer } from "react";
+import { reducer } from "./lib/reducer";
+import TetrisContext from "./lib/context";
+import { generateTetrisField } from "./tetris";
 
-function App() {
+const initialState = {
+  board: generateTetrisField(10, 20),
+};
+
+export default function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
   return (
-    <div className="space-y-8">
-      <Straight />
-      <Block />
-      <LShaped />
-      <LShapedReversed />
-      <LeftZigZag />
-      <RightZigZag />
-      <TShaped />
-    </div>
+    <TetrisContext.Provider value={{ state, dispatch }}>
+      <div className="flex gap-6 flex-wrap bg-black">
+        <Field cells={state.board} />
+      </div>
+    </TetrisContext.Provider>
   );
 }
-
-export default App;

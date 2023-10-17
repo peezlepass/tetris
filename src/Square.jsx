@@ -1,4 +1,4 @@
-export default function Block() {
+export default function Square() {
   return (
     <div className="grid grid-cols-2 grid-rows-2 w-32">
       <div
