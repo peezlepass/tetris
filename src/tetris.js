@@ -71,3 +71,16 @@ export function placeFigure(figure, width) {
   };
   return figureMap[figure];
 }
+
+export function figureToColor(figure) {
+  const colorMap = {
+    "left-zig-zag": "red",
+    "l-shaped": "blue",
+    "j-shaped": "orange",
+    "right-zig-zag": "green",
+    "square": "yellow",
+    "straight": "cyan",
+    "t-shaped": "purple",
+  };
+  return colorMap[figure];
+}

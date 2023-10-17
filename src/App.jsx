@@ -8,6 +8,7 @@ import {
   generateEmptyField,
   combineFields,
   placeFigure,
+  figureToColor,
 } from "./tetris";
 
 const board = generateTetrisField(10, 20);
@@ -37,7 +38,7 @@ export default function App() {
   useEffect(() => {
     const timer = setInterval(() => {
       dispatch({ type: "TICK" });
-    }, 1000);
+    }, 250);
     return () => {
       clearInterval(timer);
     };
@@ -45,7 +46,7 @@ export default function App() {
 
   const userBoard = generateEmptyField(10, 20);
   for (let i = 0; i < state.location.length; i++) {
-    userBoard[state.location[i]] = colorMap[state.currentFigure];
+    userBoard[state.location[i]] = figureToColor(state.currentFigure);
   }
   return (
     <TetrisContext.Provider value={{ state, dispatch }}>
