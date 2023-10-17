@@ -2,26 +2,34 @@
 // B = blank
 
 export function generateTetrisField(width, height) {
-  let arr = [];
+  let tetrisField = [];
 
   // This is the 1st row with all edges
   for (let i = 0; i < width + 2; i++) {
-    arr.push("E");
+    tetrisField.push("E");
   }
   for (let i = 0; i < height; i++) {
     for (let j = 0; j < width + 2; j++) {
       if (j === 0 || j === width + 1) {
-        arr.push("E");
+        tetrisField.push("E");
       } else {
-        arr.push("B");
+        tetrisField.push("B");
       }
     }
   }
   // This is the last row with all edges
   for (let i = 0; i < width + 2; i++) {
-    arr.push("E");
+    tetrisField.push("E");
   }
-  return arr;
+  return tetrisField;
+}
+
+export function generateEmptyField(width, height) {
+  let emptyField = [];
+  for (let i = 0; i < (width + 2) * (height + 2); i++) {
+    emptyField.push(null);
+  }
+  return emptyField;
 }
 
 export function generateQueue(count) {
@@ -41,4 +49,10 @@ export function generateQueue(count) {
     queue.push(figures[randomIndex]);
   }
   return queue;
+}
+
+export function combineFields(a, b) {
+  return a.map((cell, i) => {
+    return b[i] || cell;
+  });
 }
