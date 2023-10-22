@@ -54,6 +54,17 @@ export function reducer(state, action) {
       }
     }
     return { ...state, location: canMove ? newLocation : state.location };
+  } else if (action.type === "MOVE_DOWN") {
+    const newLocation = state.location.map((d) => d + 12);
+    let canMove = true;
+    for (let i = 0; i < newLocation.length; i++) {
+      if (state.board[newLocation[i]] !== "E") {
+        canMove = false;
+      }
+    }
+    return { ...state, location: canMove ? newLocation : state.location };
+  } else if (action.type === "INSTANT_DROP") {
+    return state;
   } else {
     return state;
   }

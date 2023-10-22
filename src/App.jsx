@@ -35,6 +35,7 @@ const colorMap = {
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
+  console.log(state);
   useEffect(() => {
     const timer = setInterval(() => {
       dispatch({ type: "TICK" });
@@ -44,6 +45,10 @@ export default function App() {
         dispatch({ type: "MOVE_LEFT" });
       } else if (event.key === "ArrowRight") {
         dispatch({ type: "MOVE_RIGHT" });
+      } else if (event.key === "ArrowUp") {
+        dispatch({ type: "INSTANT_DROP" });
+      } else if (event.key === "ArrowDown") {
+        dispatch({ type: "MOVE_DOWN" });
       }
     };
     window.addEventListener("keydown", handleKeyDown);
