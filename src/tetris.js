@@ -24,12 +24,12 @@ export function generateTetrisField(width, height) {
   return tetrisField;
 }
 
-export function generateEmptyField(width, height) {
-  let emptyField = [];
+export function generateUserField(width, height) {
+  let userField = [];
   for (let i = 0; i < (width + 2) * (height + 2); i++) {
-    emptyField.push(null);
+    userField.push(null);
   }
-  return emptyField;
+  return userField;
 }
 
 export function generateQueue(count) {
@@ -52,9 +52,15 @@ export function generateQueue(count) {
 }
 
 export function combineFields(a, b) {
-  return a.map((cell, i) => {
-    return b[i] || cell;
-  });
+  // return a.map((cell, i) => {
+  //   return b[i] || cell;
+  // });
+
+  let finalField = [];
+  for (let i = 0; i < a.length; i++) {
+    finalField.push(b[i] || a[i]);
+  }
+  return finalField;
 }
 
 export function placeFigure(figure, width) {
@@ -83,4 +89,22 @@ export function figureToColor(figure) {
     "t-shaped": "purple",
   };
   return colorMap[figure];
+}
+
+[18, 30, 29, 41];
+
+export function rotateFigure(figure, location, currentDegrees) {
+  const rotationMap = {
+    "left-zig-zag": {
+      0: [12, -1, -12, -25],
+      90: [11, 0, 13, 2],
+      180: [-25, -12, -1, 12],
+      270: [2, 13, 0, 11],
+    },
+  };
+
+  const modifications = rotationMap[figure][currentDegrees];
+  return location.map((element, index) => {
+    return element + modifications[index];
+  });
 }

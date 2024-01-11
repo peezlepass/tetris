@@ -5,21 +5,18 @@ import TetrisContext from "./lib/context";
 import {
   generateQueue,
   generateTetrisField,
-  generateEmptyField,
+  generateUserField,
   combineFields,
   placeFigure,
   figureToColor,
 } from "./tetris";
 
-const board = generateTetrisField(10, 20);
-const queue = generateQueue(100000);
-const currentFigure = "left-zig-zag";
-const location = placeFigure(currentFigure, 10);
 const initialState = {
-  board,
-  queue,
-  currentFigure,
-  location,
+  tetrisField: generateTetrisField(10, 20),
+  queue: generateQueue(100000),
+  currentFigure: "left-zig-zag",
+  location: placeFigure("left-zig-zag", 10),
+  rotation: 0,
 };
 console.log(initialState);
 
@@ -39,16 +36,18 @@ export default function App() {
   useEffect(() => {
     const timer = setInterval(() => {
       dispatch({ type: "TICK" });
-    }, 250);
+    }, 1000);
     const handleKeyDown = (event) => {
       if (event.key === "ArrowLeft") {
         dispatch({ type: "MOVE_LEFT" });
       } else if (event.key === "ArrowRight") {
         dispatch({ type: "MOVE_RIGHT" });
-      } else if (event.key === "ArrowUp") {
+      } else if (event.key === " ") {
         dispatch({ type: "INSTANT_DROP" });
       } else if (event.key === "ArrowDown") {
         dispatch({ type: "MOVE_DOWN" });
+      } else if (event.key === "ArrowUp") {
+        dispatch({ type: "ROTATE" });
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -58,14 +57,14 @@ export default function App() {
     };
   }, []);
 
-  const userBoard = generateEmptyField(10, 20);
+  const userField = generateUserField(10, 20);
   for (let i = 0; i < state.location.length; i++) {
-    userBoard[state.location[i]] = figureToColor(state.currentFigure);
+    userField[state.location[i]] = figureToColor(state.currentFigure);
   }
   return (
     <TetrisContext.Provider value={{ state, dispatch }}>
       <div className="flex gap-6 flex-wrap bg-black">
-        <Field bricks={combineFields(state.board, userBoard)} />
+        <Field bricks={combineFields(state.tetrisField, userField)} />
       </div>
     </TetrisContext.Provider>
   );
