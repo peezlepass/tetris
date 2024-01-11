@@ -101,6 +101,12 @@ export function rotateFigure(figure, location, currentDegrees) {
       180: [-25, -12, -1, 12],
       270: [2, 13, 0, 11],
     },
+    "t-shaped": {
+      0: [13, -11, 0, 11],
+      90: [11, 13, 0, -13],
+      180: [-13, 11, 0, -11],
+      270: [-11, -13, 0, +13],
+    },
   };
 
   const modifications = rotationMap[figure][currentDegrees];
