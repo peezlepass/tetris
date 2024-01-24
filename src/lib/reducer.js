@@ -35,6 +35,7 @@ export function reducer(state, action) {
         currentFigure: newFigure,
         queue: newQueue,
         location: placeFigure(newFigure, 10),
+        rotation: 0,
       };
     }
   } else if (action.type === "MOVE_LEFT") {
@@ -101,7 +102,7 @@ export function reducer(state, action) {
     }
     return {
       ...state,
-      rotation: (state.rotation + 90) % 360,
+      rotation: canMove ? (state.rotation + 90) % 360 : state.rotation,
       location: canMove ? newLocation : state.location,
     };
   } else {

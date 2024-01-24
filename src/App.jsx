@@ -14,8 +14,8 @@ import {
 const initialState = {
   tetrisField: generateTetrisField(10, 20),
   queue: generateQueue(100000),
-  currentFigure: "t-shaped",
-  location: placeFigure("t-shaped", 10),
+  currentFigure: "right-zig-zag",
+  location: placeFigure("right-zig-zag", 10),
   rotation: 0,
 };
 console.log(initialState);
