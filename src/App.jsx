@@ -63,7 +63,7 @@ export default function App() {
   }
   return (
     <TetrisContext.Provider value={{ state, dispatch }}>
-      <div className="flex gap-6 flex-wrap bg-black">
+      <div className="justify-center flex gap-6 flex-wrap bg-black">
         <Field bricks={combineFields(state.tetrisField, userField)} />
       </div>
     </TetrisContext.Provider>

@@ -23,12 +23,47 @@ export function reducer(state, action) {
 
     if (canMove) {
       return { ...state, location: newLocation };
+      // } else if (!canMove && true) {
     } else {
       const newTetrisField = state.tetrisField.slice();
       for (let i = 0; i < state.location.length; i++) {
         newTetrisField[state.location[i]] = figureToColor(state.currentFigure);
       }
+
+      // remove lines from tetris field if possible
+      // for loops will check for a possibility of a removal
+      for (let i = 12; i < newTetrisField.length - 12; i += 12) {
+        let hasNoEmptyCells = true;
+        for (let j = 1; j < 11; j++) {
+          console.log("j-->", j);
+          if (newTetrisField[i + j] === "E") {
+            hasNoEmptyCells = false;
+          }
+        }
+
+        if (hasNoEmptyCells) {
+          newTetrisField.splice(i, 12);
+          newTetrisField.splice(
+            12,
+            0,
+            "B",
+            "E",
+            "E",
+            "E",
+            "E",
+            "E",
+            "E",
+            "E",
+            "E",
+            "E",
+            "E",
+            "B"
+          );
+        }
+      }
+
       const [newFigure, ...newQueue] = state.queue;
+
       return {
         ...state,
         tetrisField: newTetrisField,
