@@ -10,6 +10,7 @@ import {
   placeFigure,
   figureToColor,
 } from "./tetris";
+import GameOver from "./GameOver";
 
 const initialState = {
   tetrisField: generateTetrisField(10, 20),
@@ -17,8 +18,8 @@ const initialState = {
   currentFigure: "right-zig-zag",
   location: placeFigure("right-zig-zag", 10),
   rotation: 0,
+  isGameOver: false,
 };
-console.log(initialState);
 
 const colorMap = {
   "left-zig-zag": "red",
@@ -32,11 +33,10 @@ const colorMap = {
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log(state);
   useEffect(() => {
     const timer = setInterval(() => {
       dispatch({ type: "TICK" });
-    }, 1000);
+    }, 500);
     const handleKeyDown = (event) => {
       if (event.key === "ArrowLeft") {
         dispatch({ type: "MOVE_LEFT" });
@@ -61,11 +61,16 @@ export default function App() {
   for (let i = 0; i < state.location.length; i++) {
     userField[state.location[i]] = figureToColor(state.currentFigure);
   }
+  // console.log(state.tetrisField);
+  // console.log(userField);
+  console.log(state.isGameOver);
+
   return (
     <TetrisContext.Provider value={{ state, dispatch }}>
       <div className="justify-center flex gap-6 flex-wrap bg-black">
         <Field bricks={combineFields(state.tetrisField, userField)} />
       </div>
+      {state.isGameOver ? <GameOver /> : null}
     </TetrisContext.Provider>
   );
 }

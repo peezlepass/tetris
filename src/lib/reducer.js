@@ -2,7 +2,6 @@ import { figureToColor, placeFigure, rotateFigure } from "../tetris";
 
 export function reducer(state, action) {
   if (action.type === "TICK") {
-    console.log(state.location);
     // Can we move down any further?
     // Yes?
     //   move us down
@@ -35,7 +34,6 @@ export function reducer(state, action) {
       for (let i = 12; i < newTetrisField.length - 12; i += 12) {
         let hasNoEmptyCells = true;
         for (let j = 1; j < 11; j++) {
-          console.log("j-->", j);
           if (newTetrisField[i + j] === "E") {
             hasNoEmptyCells = false;
           }
@@ -63,14 +61,23 @@ export function reducer(state, action) {
       }
 
       const [newFigure, ...newQueue] = state.queue;
+      let newFigureLocation = placeFigure(newFigure, 10);
+
+      let gameOver = false;
+      for (let i = 0; i < newFigureLocation.length; i++) {
+        if (newTetrisField[newFigureLocation[i]] !== "E") {
+          gameOver = true;
+        }
+      }
 
       return {
         ...state,
         tetrisField: newTetrisField,
         currentFigure: newFigure,
         queue: newQueue,
-        location: placeFigure(newFigure, 10),
+        location: newFigureLocation,
         rotation: 0,
+        isGameOver: gameOver,
       };
     }
   } else if (action.type === "MOVE_LEFT") {
