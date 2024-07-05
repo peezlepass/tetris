@@ -29,6 +29,7 @@ export function reducer(state, action) {
         newTetrisField[state.location[i]] = figureToColor(state.currentFigure);
       }
 
+      let newCurrentScore = state.currentScore;
       // remove lines from tetris field if possible
       // for loops will check for a possibility of a removal
       for (let i = 12; i < newTetrisField.length - 12; i += 12) {
@@ -40,6 +41,7 @@ export function reducer(state, action) {
         }
 
         if (hasNoEmptyCells) {
+          newCurrentScore += 10;
           newTetrisField.splice(i, 12);
           newTetrisField.splice(
             12,
@@ -78,6 +80,7 @@ export function reducer(state, action) {
         location: newFigureLocation,
         rotation: 0,
         isGameOver: gameOver,
+        currentScore: newCurrentScore,
       };
     }
   } else if (action.type === "MOVE_LEFT") {

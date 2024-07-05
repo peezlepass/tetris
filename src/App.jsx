@@ -11,6 +11,8 @@ import {
   figureToColor,
 } from "./tetris";
 import GameOver from "./GameOver";
+import HighScores from "./HighScores";
+import GameStats from "./GameStats";
 
 const initialState = {
   tetrisField: generateTetrisField(10, 20),
@@ -19,6 +21,7 @@ const initialState = {
   location: placeFigure("right-zig-zag", 10),
   rotation: 0,
   isGameOver: false,
+  currentScore: 0,
 };
 
 const colorMap = {
@@ -68,7 +71,10 @@ export default function App() {
   return (
     <TetrisContext.Provider value={{ state, dispatch }}>
       <div className="justify-center flex gap-6 flex-wrap bg-black">
+        {/* <div className="grid grid-cols-3 bg-black"> */}
+        <HighScores></HighScores>
         <Field bricks={combineFields(state.tetrisField, userField)} />
+        <GameStats currentScore={state.currentScore}></GameStats>
       </div>
       {state.isGameOver ? <GameOver /> : null}
     </TetrisContext.Provider>
