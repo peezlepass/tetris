@@ -10,6 +10,12 @@ export default {
       fontFamily: {
         gameOver: ['"Press Start 2P"', "system-ui"],
       },
+      gridTemplateColumns: {
+        game: "1fr auto 1fr",
+      },
+      height: {
+        gameHeight: "880px",
+      },
     },
   },
 

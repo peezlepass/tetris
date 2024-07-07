@@ -71,7 +71,17 @@ export function reducer(state, action) {
           gameOver = true;
         }
       }
+      let newHighestScores = state.highestScores.slice();
 
+      if (gameOver && !state.isGameOver) {
+        newHighestScores.push({ name: "You", score: newCurrentScore });
+        newHighestScores.sort((a, b) => b.score - a.score);
+        newHighestScores = newHighestScores.slice(0, 3);
+        window.localStorage.setItem(
+          "highScores",
+          JSON.stringify(newHighestScores)
+        );
+      }
       return {
         ...state,
         tetrisField: newTetrisField,
@@ -81,6 +91,7 @@ export function reducer(state, action) {
         rotation: 0,
         isGameOver: gameOver,
         currentScore: newCurrentScore,
+        highestScores: newHighestScores,
       };
     }
   } else if (action.type === "MOVE_LEFT") {

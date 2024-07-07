@@ -14,6 +14,7 @@ import GameOver from "./GameOver";
 import HighScores from "./HighScores";
 import GameStats from "./GameStats";
 
+const storedHighestScores = window.localStorage.getItem("highScores");
 const initialState = {
   tetrisField: generateTetrisField(10, 20),
   queue: generateQueue(100000),
@@ -22,6 +23,12 @@ const initialState = {
   rotation: 0,
   isGameOver: false,
   currentScore: 0,
+  highestScores: storedHighestScores
+    ? JSON.parse(storedHighestScores)
+    : [
+        { name: "Ell", score: 830 },
+        { name: "Jam", score: 510 },
+      ],
 };
 
 const colorMap = {
@@ -37,9 +44,12 @@ const colorMap = {
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
+    const level = Math.floor(state.currentScore / 100);
+    const time = 1000 * Math.pow(0.75, level);
+
     const timer = setInterval(() => {
       dispatch({ type: "TICK" });
-    }, 500);
+    }, time);
     const handleKeyDown = (event) => {
       if (event.key === "ArrowLeft") {
         dispatch({ type: "MOVE_LEFT" });
@@ -58,7 +68,7 @@ export default function App() {
       clearInterval(timer);
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [state.currentScore]);
 
   const userField = generateUserField(10, 20);
   for (let i = 0; i < state.location.length; i++) {
@@ -66,13 +76,13 @@ export default function App() {
   }
   // console.log(state.tetrisField);
   // console.log(userField);
-  console.log(state.isGameOver);
+  // console.log(state.isGameOver);
 
   return (
     <TetrisContext.Provider value={{ state, dispatch }}>
-      <div className="justify-center flex gap-6 flex-wrap bg-black">
-        {/* <div className="grid grid-cols-3 bg-black"> */}
-        <HighScores></HighScores>
+      {/* <div className="justify-center flex gap-6 flex-wrap bg-black"> */}
+      <div className="grid grid-cols-game bg-black h-screen items-center">
+        <HighScores highScores={state.highestScores}></HighScores>
         <Field bricks={combineFields(state.tetrisField, userField)} />
         <GameStats currentScore={state.currentScore}></GameStats>
       </div>
